@@ -5,13 +5,10 @@ import './App.css';
 import Header from './components/header/Navvar'
 import Signup from './pages/signup/Signup';
 import SignIn from './pages/signin/SignIn';
+import Router from './routes';
 function App() {
   return (
-    <div className="App">
-     {/* <Header /> */}
-     {/* <Signup /> */}
-     <SignIn />
-    </div>
+    <Router />
   );
 }
 
