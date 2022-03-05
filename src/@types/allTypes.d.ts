@@ -1,5 +1,5 @@
 declare type UserProfile = {
-    _id?:string
+    _id?:string;
     Name?:string;
     username?:string;
     Age?:string;
@@ -10,6 +10,19 @@ declare type UserProfile = {
     avatar?:string;
     story?:string;
     bio?:string;
-    instaLink?:string;
-    twitterLink?:string;
+}
+
+declare type SigninSignupResponse = {
+    token?:string;
+    msg?:string;
+}
+
+declare type Upload = {
+    image:any;
+}
+
+declare type uploadResponse = {
+    msg:string;
+    public_id:string;
+    url:string;
 }
