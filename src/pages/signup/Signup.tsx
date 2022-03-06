@@ -20,8 +20,7 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Iconify from "../../components/Iconify";
-import {useSignupMutation} from "../../Services/AuthApi"
-
+import { useSignupMutation } from "../../Services/AuthApi";
 
 const theme = createTheme({
   breakpoints: {
@@ -37,6 +36,7 @@ const theme = createTheme({
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
   const {
     control,
@@ -84,10 +84,9 @@ const Signup = () => {
     setLocation(event.target.value);
   };
 
-  const [registerUser, { isLoading,error:signupError }] = useSignupMutation()
-  let registerError:any = signupError
+  const [registerUser, { isLoading, error: signupError }] = useSignupMutation();
+  let registerError: any = signupError;
   // console.log("signupError",signupError?.data?.message);
-  
 
   const uploadImageHandler = async (event: any) => {
     const file = event.target.files[0];
@@ -115,13 +114,16 @@ const Signup = () => {
       bio: bio,
     };
 
-    let userSignupResponse:any = await registerUser(user)
-    console.log("userSignupResponse",userSignupResponse?.data?.msg);
-    if(userSignupResponse.data?.msg === "Registered successfull!"){
+    let userSignupResponse: any = await registerUser(user);
+    console.log("userSignupResponse", userSignupResponse?.data?.msg);
+    if (userSignupResponse.data?.msg === "Registered successfull!") {
       // localStorage.setItem("Token",userSignupResponse.data?.token)
-      navigate('/signin')
+      enqueueSnackbar("Registered Successfully!", {
+        variant: "success",
+      });
+      navigate("/signin");
     }
-   };
+  };
 
   return (
     <>

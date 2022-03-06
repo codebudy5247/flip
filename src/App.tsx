@@ -6,9 +6,13 @@ import Header from './components/header/Navvar'
 import Signup from './pages/signup/Signup';
 import SignIn from './pages/signin/SignIn';
 import Router from './routes';
+import NotistackProvider from './components/NootificationProvider';
 function App() {
   return (
+    <NotistackProvider>
     <Router />
+    </NotistackProvider>
+    
   );
 }
 
