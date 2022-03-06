@@ -23,7 +23,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Iconify from "../../components/Iconify";
 import { styled } from "@mui/material/styles";
-
+import { useSigninMutation } from "../../Services/AuthApi";
 const theme = createTheme({
   breakpoints: {
     values: {
@@ -36,18 +36,45 @@ const theme = createTheme({
   },
 });
 
-type FormValuesProps = UserProfile;
-
 const SignIn = () => {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setpassword] = useState("");
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValuesProps>();
+  } = useForm({
+    mode: "onChange",
+  });
 
-  const onSubmit: SubmitHandler<FormValuesProps> = async (data) => {};
+  const onChangeEmail = (event: any) => {
+    setEmail(event.target.value);
+  };
+  const onChangePassword = (event: any) => {
+    setpassword(event.target.value);
+  };
+
+  const [signInUser] = useSigninMutation();
+
+  const onSubmit = async () => {
+    const user: UserProfile = {
+      Password: password,
+      Email_id: email,
+    };
+
+    let userSigninResponse: any = await signInUser(user);
+    if (userSigninResponse.data.msg === "Login successfull!") {
+      localStorage.setItem("Token", userSigninResponse.data?.token);
+      enqueueSnackbar("Login Successfully!", {
+        variant: "success",
+      });
+      navigate("/");
+    }
+  };
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -69,12 +96,11 @@ const SignIn = () => {
               <Typography component="h1" variant="h5" sx={{ marginBottom: 2 }}>
                 Sign In
               </Typography>
-              <Typography variant="h4" sx={{ mb:4 ,mt:2}}>
-              Hi, Welcome Back
-            </Typography>
+              <Typography variant="h4" sx={{ mb: 4, mt: 2 }}>
+                Hi, Welcome Back
+              </Typography>
             </Grid>
 
-          
             <form onSubmit={handleSubmit(onSubmit)}>
               <Box
                 sx={{
@@ -82,7 +108,12 @@ const SignIn = () => {
                   rowGap: 3,
                 }}
               >
-                <TextField label="Email" id="email" variant="outlined" />
+                <TextField
+                  label="Email"
+                  id="email"
+                  variant="outlined"
+                  onChange={onChangeEmail}
+                />
                 <TextField
                   label="Password"
                   id="password"
@@ -104,6 +135,7 @@ const SignIn = () => {
                       </InputAdornment>
                     ),
                   }}
+                  onChange={onChangePassword}
                 />
               </Box>
               <Stack alignItems="flex-end" sx={{ mt: 3 }}>

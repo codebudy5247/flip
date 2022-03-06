@@ -7,6 +7,7 @@ import SignIn from "../pages/signin/SignIn";
 import Home from "../pages/Home";
 
 export default function Router() {
+  let acessToken : any = localStorage.getItem('Token')
   return useRoutes([
     {
       path: "/",

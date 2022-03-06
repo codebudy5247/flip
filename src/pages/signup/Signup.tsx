@@ -115,13 +115,12 @@ const Signup = () => {
     };
 
     let userSignupResponse: any = await registerUser(user);
-    console.log("userSignupResponse", userSignupResponse?.data?.msg);
     if (userSignupResponse.data?.msg === "Registered successfull!") {
-      // localStorage.setItem("Token",userSignupResponse.data?.token)
+      localStorage.setItem("Token",userSignupResponse.data?.token)
       enqueueSnackbar("Registered Successfully!", {
         variant: "success",
       });
-      navigate("/signin");
+      navigate("/");
     }
   };
 
