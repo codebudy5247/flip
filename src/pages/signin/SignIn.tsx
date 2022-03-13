@@ -24,6 +24,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Iconify from "../../components/Iconify";
 import { styled } from "@mui/material/styles";
 import { useSigninMutation } from "../../Services/AuthApi";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { tokenData } from "../../Redux/authSlice";
 const theme = createTheme({
   breakpoints: {
     values: {
@@ -37,6 +39,7 @@ const theme = createTheme({
 });
 
 const SignIn = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
@@ -69,6 +72,7 @@ const SignIn = () => {
     let userSigninResponse: any = await signInUser(user);
     if (userSigninResponse.data.msg === "Login successfull!") {
       localStorage.setItem("Token", userSigninResponse.data?.token);
+      dispatch(tokenData(userSigninResponse.data?.token));
       enqueueSnackbar("Login Successfully!", {
         variant: "success",
       });
