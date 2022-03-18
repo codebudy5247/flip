@@ -37,6 +37,7 @@ const theme = createTheme({
 const Signup = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const [loading,setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const {
     control,
@@ -84,6 +85,8 @@ const Signup = () => {
     setLocation(event.target.value);
   };
 
+ 
+
   const [registerUser, { isLoading, error: signupError }] = useSignupMutation();
   let registerError: any = signupError;
   // console.log("signupError",signupError?.data?.message);
@@ -113,8 +116,9 @@ const Signup = () => {
       avatar: avatar,
       bio: bio,
     };
-
+    setLoading(true)
     let userSignupResponse: any = await registerUser(user);
+    setLoading(false)
     if (userSignupResponse.data?.msg === "Registered successfull!") {
       localStorage.setItem("Token",userSignupResponse.data?.token)
       enqueueSnackbar("Registered Successfully!", {
@@ -253,7 +257,7 @@ const Signup = () => {
                 />
               </Box>
               <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-                <LoadingButton size="large" type="submit" variant="contained">
+                <LoadingButton size="large" type="submit" variant="contained" loading={loading}>
                   Submit
                 </LoadingButton>
               </Stack>

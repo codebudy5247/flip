@@ -42,6 +42,7 @@ const SignIn = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+  const [loading,setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
@@ -68,8 +69,9 @@ const SignIn = () => {
       Password: password,
       Email_id: email,
     };
-
+    setLoading(true)
     let userSigninResponse: any = await signInUser(user);
+    setLoading(false)
     if (userSigninResponse.data.msg === "Login successfull!") {
       localStorage.setItem("Token", userSigninResponse.data?.token);
       dispatch(tokenData(userSigninResponse.data?.token));
@@ -143,7 +145,7 @@ const SignIn = () => {
                 />
               </Box>
               <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-                <LoadingButton size="large" type="submit" variant="contained">
+                <LoadingButton size="large" type="submit" variant="contained" loading={loading}>
                   Submit
                 </LoadingButton>
               </Stack>

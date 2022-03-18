@@ -3,6 +3,7 @@ import { useDispatch as useAppDispatch,useSelector as useAppSelector,TypedUseSel
 import { persistStore, persistReducer } from 'redux-persist';
 import { rootPersistConfig,rootReducer } from './rootReducer'
 import { authApi } from '../Services/AuthApi';
+import { postApi } from '../Services/PostApi';
 // ----------------------------------------------------------------------
 
 const store = configureStore({
@@ -11,7 +12,9 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat([authApi.middleware]),
+    })
+    // .concat([authApi.middleware,postApi.middleware]),
+    ,
     devTools: true,
 });
 

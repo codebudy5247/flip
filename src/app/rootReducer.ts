@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage';
 // slices
 import { authApi } from '../Services/AuthApi';
 import { uploadApi } from '../Services/uploadApi';
+import { postApi } from '../Services/PostApi';
 import authReducer from '../Redux/authSlice'
 // ----------------------------------------------------------------------
 
@@ -17,7 +18,7 @@ const rootPersistConfig = {
 const rootReducer = combineReducers({
     [authApi.reducerPath]:authApi.reducer,
     [uploadApi.reducerPath]:uploadApi.reducer,
-    // authToken:authReducer
+    [postApi.reducerPath]:postApi.reducer,
 });
 
 export { rootPersistConfig, rootReducer };
