@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-let API_URL = process.env.REACT_APP__API_URL 
+let API_URL = process.env.REACT_APP__API_URL;
 // let API_URL = 'http://localhost:3001'
 
 export const authApi = createApi({
@@ -23,7 +23,11 @@ export const authApi = createApi({
         body: UserProfile,
       }),
     }),
+    getUserInfo: builder.query<UserProfile, void>({
+      query: () => `/api/user`,
+    }),
   }),
 });
 
-export const { useSignupMutation,useSigninMutation } = authApi;
+export const { useSignupMutation, useSigninMutation, useGetUserInfoQuery } =
+  authApi;

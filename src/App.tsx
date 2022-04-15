@@ -7,13 +7,14 @@ import Home from "./pages/Home";
 import NotistackProvider from "./components/NootificationProvider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./routes/PrivateRoute";
-
+import Navbar from './components/header/Navvar'
 function App() {
 
   return (
     <Router>
       <Fragment>
         <NotistackProvider>
+          <Navbar />
           <Routes>
             <Route path="/" element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
